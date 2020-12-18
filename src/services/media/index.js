@@ -6,7 +6,37 @@ const {
   writeReviews,
 } = require("../../fsUtilities")
 
+const cloudinary = require("../../cloudinary")
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const multer = require("multer")
+
 const routers = express.Router()
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "Netflix Clone",
+  },
+})
+const cloudinaryMulter = multer({ storage: storage })
+
+routers.post(
+  "/:mediaId/upload",
+  cloudinaryMulter.single("image"),
+  async (req, res, next) => {
+    try {
+      const mediasDB = await getMedias()
+      mediasDB.forEach((media) => {
+        if (media.imdbID === req.params.mediaId) {
+          media.Poster = "url"
+          res.send(201).send("Image uploaded")
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 routers.get("/", async (req, res, next) => {
   try {

@@ -1,6 +1,8 @@
 const express = require("express")
 const cors = require("cors")
 const listEndpoints = require("express-list-endpoints")
+const mediaRoutes = require("./services/media")
+const reviewRoutes = require("./services/reviews")
 
 const {
   badRequestHandler,
@@ -30,8 +32,8 @@ const corsOptions = {
 
 // app.use(cors(corsOptions))
 
-const mediaRoutes = require("./services/media")
 app.use("/media", mediaRoutes)
+app.use("/reviews", reviewRoutes)
 
 // ERROR HANDLERS
 app.use(badRequestHandler)

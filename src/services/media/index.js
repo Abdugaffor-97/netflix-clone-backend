@@ -4,10 +4,11 @@ const axios = require("axios");
 let url = "http://www.omdbapi.com/?apikey=e4c8a5bd&s=";
 
 const routers = express.Router();
+
 routers.get("/", (req, res, next) => {
   try {
     if (req.params.type) {
-      axios(url + req.query.title + "&type=series")
+      axios(url + req.params.id)
         .then((reqeust) => res.send(reqeust.data))
         .catch((error) => next(error));
     } else {
@@ -15,6 +16,20 @@ routers.get("/", (req, res, next) => {
         .then((reqeust) => res.send(reqeust.data))
         .catch((error) => next(error));
     }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+routers.get("/:id", (req, res, next) => {
+  try {
+    axios("http://www.omdbapi.com/?apikey=ad2a416a&i=" + req.params.id)
+      .then((reqeust) => {
+        console.log(reqeust);
+        res.send(reqeust);
+      })
+      .catch((error) => next(error));
   } catch (error) {
     console.log(error);
     next(error);

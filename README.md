@@ -1,1 +1,3 @@
 # netflix-clone-backend
+
+[Frontend](https://github.com/Abdugaffor-97/netflix-clone-frontend/blob/master/README.md)

@@ -26,7 +26,6 @@ routers.get("/:id", (req, res, next) => {
   try {
     axios("http://www.omdbapi.com/?apikey=ad2a416a&i=" + req.params.id)
       .then((reqeust) => {
-        console.log(reqeust.data);
         res.send(reqeust.data);
       })
       .catch((error) => next(error));
